@@ -21,12 +21,60 @@ treb7uchet
 In this example, the calibration values of these four lines are 12, 38, 15, and 77. Adding these together produces 142.
 
 Consider your entire calibration document. What is the sum of all of the calibration values?
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ANSWER AT BOTTOM
 """
 
 
+class CalibratiionValueException(Exception):
+    def __init__(self, message):
+        self.message = message
+        super().__init__(self.message)
+
+
+def getCalVal(line=""):
+    if len(line) == 0:
+        raise CalibratiionValueException("ERROR: Line cannot be empty.")
+
+    calVal = ""
+
+    for char in line:
+        if char.isdigit():
+            calVal += char
+            break
+
+    # get last digit
+    for char in line[::-1]:
+        if char.isdigit():
+            calVal += char
+            break
+
+    return int(calVal)
+
+
 def main():
-    print("Merry Christmas")
+    sum = 0
+    # read input file
+    with open("problem_1_input.dat") as inf:
+        # for each line in input file
+        for line in inf:
+            line = line.rstrip()
+            # handle errors if line doesn't have a two digit number
+            try:
+                # get calibration value
+                calVal = getCalVal(line)
+
+                # add calibration value to sum
+                sum += calVal
+
+            except CalibratiionValueException as e:
+                print(e)
+
+    print(f"Sum: {sum}")
 
 
 if __name__ == '__main__':
     main()
+
+# ANSWER: 55130
