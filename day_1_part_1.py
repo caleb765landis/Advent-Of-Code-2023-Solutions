@@ -50,26 +50,36 @@ def getCalVal(line=""):
             calVal += char
             break
 
+    if len(calVal) != 2:
+        raise CalibratiionValueException(
+            "ERROR: Calibration Value must be a 2 digit number.")
+
     return int(calVal)
 
 
-def main():
+def getSum(inf, getCalVal):
     sum = 0
+
+    # for each line in input file
+    for line in inf:
+        line = line.rstrip()
+        # handle errors if line doesn't have a two digit number
+        try:
+            # get calibration value
+            calVal = getCalVal(line)
+            # add calibration value to sum
+            sum += calVal
+
+        except CalibratiionValueException as e:
+            print(e)
+
+    return sum
+
+
+def main():
     # read input file
-    with open("problem_1_input.dat") as inf:
-        # for each line in input file
-        for line in inf:
-            line = line.rstrip()
-            # handle errors if line doesn't have a two digit number
-            try:
-                # get calibration value
-                calVal = getCalVal(line)
-
-                # add calibration value to sum
-                sum += calVal
-
-            except CalibratiionValueException as e:
-                print(e)
+    with open("day_1_input.dat") as inf:
+        sum = getSum(inf, getCalVal)
 
     print(f"Sum: {sum}")
 
