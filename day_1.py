@@ -163,7 +163,7 @@ def getCalValStrs(line=""):
 
 def main():
     # read input file
-    with open("day_1_input.dat") as inf:
+    with open("input/day_1_input.dat") as inf:
         pt1Sum = 0
         pt2Sum = 0
 
